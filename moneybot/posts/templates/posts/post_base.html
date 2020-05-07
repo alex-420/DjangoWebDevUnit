@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="posts-page">
+	<div class="container">
+		{% block post_header %}{% endblock %}
+		{% block post_content %}{% endblock %}
+		{% block post_footer %}{% endblock %}
+	</div>
+</div>
+{% endblock %}

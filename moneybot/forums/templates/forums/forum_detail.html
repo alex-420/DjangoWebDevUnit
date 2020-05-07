@@ -1,0 +1,35 @@
+{% extends "forums/forum_base.html" %}
+
+{% block forum_header %}
+<div class="container">
+  <br>
+  <h1>{{forum.name}}</h1>
+  <h3> Member Count: {{forum.members.count}}</h3>
+
+  <div class="content">
+  	{% if user in forum.members.all %}
+  		<a href="{% url 'forums:leave' slug=forum.slug %}" class="btn btn-lg btn-warning"><span class="fa fa-times-circle-o"></span> Leave</a>
+  	{% else %}
+  		<a href="{% url 'forums:join' slug=forum.slug %}" class="btn btn-lg btn-warning"><span class="fa fa-check-circle-o"></span> Join</a>
+  	{% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+{% block forum_content %}
+
+<div class="col-md-8">
+	{% if forum.posts.count == 0 %}
+  <br>
+	<h3>No posts in this forum yet, why not lead the way!</h3>
+
+	{% else %}
+
+		{% for post in forum.posts.all %}
+			{% include "posts/_post.html" %}
+		{% endfor %}
+
+	{% endif %}
+</div>
+{% endblock %}

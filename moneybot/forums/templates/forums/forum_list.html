@@ -1,0 +1,43 @@
+{% extends "forums/forum_base.html" %}
+
+{% block forum_header %}
+<div class="col-md-4">
+	<div class="content">
+		{% if user.is_authenticated %}
+		<h2>
+			Welcome back
+			<a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a>
+		</h2>
+
+    {% endif %}
+			<h2>Forums</h2>
+
+			<p>Welcome to the Forums Page! <br>Select a forum.</p>
+	</div>
+	{% if user.is_authenticated %}
+	<a href="{% url 'forums:create' %}" class="btn btn-warning" role="button"><span class="fa fa-plus"></span> Create New Forum!</a>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block forum_content %}
+<div class="col-md-8">
+	<div class="list-group">
+		{% for forum in object_list %}
+		<a href="{% url 'forums:single' slug=forum.slug %}"
+		class="list-group-item list-group-item-action flex-column align-items-start">
+			<h3 class="mb-1">{{ forum.name }}</h3>
+			<p class="mb-1">{{ forum.info_html|safe }}</p>
+			<div class="d-flex w-40 justify-content-between">
+				<small class="text-muted"><span class="badge badge-secondary">
+					{{ forum.members.count }}</span> member{{ forum.members.count|pluralize }}</small>
+				<small class="text-muted"><span class="badge badge-secondary">
+					{{ forum.posts.count }}</span> post{{ forum.posts.count|pluralize }}</small>
+			<span></span><span></span>
+			</div>
+		</a>
+
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
